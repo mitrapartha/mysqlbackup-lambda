@@ -2,7 +2,6 @@ import subprocess
 import os
 import time
 import json
-import mysql.connector
 
 S3_BUCKET = os.environ['S3_BUCKET']
 
@@ -21,11 +20,6 @@ def backup(event, context):
     
 #    print(dbHost)
     print("%s %s ".format(dbHost, dbName))
-#   Test connectivity
-    cnx = mysql.connector.connect(user=dbUser, password=dbPass,
-                              host=dbHost,
-                              database=dbName)
-    print(cnx.is_connected())
     for idx, dbName in enumerate(dbName):
         print("Backup started for " + dbName + " database" )
         # Command to execute 
