@@ -8,7 +8,7 @@ S3_BUCKET = os.environ['S3_BUCKET']
 timestamp = time.strftime('%Y-%m-%d-%I:%M')
 
 
-def handler(event, context):
+def backup(event, context):
     print("Function started")
 
     dbHost = os.environ['DB_HOST']
