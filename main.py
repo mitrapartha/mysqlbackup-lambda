@@ -28,5 +28,5 @@ def backup(event, context):
     #Execute (command)
         subprocess.Popen(command, shell=True).wait()
         if idx < len(dbName) - 1:
-           print(dbName)(" - MySQL backup finished")
+           print("MySQL " + dbName + "backup finished")
 #    return "backup finished"
