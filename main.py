@@ -21,11 +21,12 @@ def backup(event, context):
 #    print(dbHost)
 #    print("%s %s ".format(dbHost, dbName))
 
-    for idx, value in enumerate(values):
+    for idx, dbName in enumerate(dbName):
     # Command to execute 
-    command = "mysqldump --host %s --user %s -p%s %s | gzip -c | aws s3 cp - s3://%s/%s.gz" % (
-        dbHost, dbUser, dbPass, dbName, S3_BUCKET, dbName + "_" + timestamp)
+        command = "mysqldump --host %s --user %s -p%s %s | gzip -c | aws s3 cp - s3://%s/%s.gz" % (
+            dbHost, dbUser, dbPass, dbName, S3_BUCKET, dbName + "_" + timestamp)
     #Execute (command)
-    subprocess.Popen(command, shell=True).wait()
-    print("MySQL backup finished")
-    return "backup finished"
+        subprocess.Popen(command, shell=True).wait()
+        if idx < len(dbName) - 1:
+           print(dbName)(" - MySQL backup finished")
+#    return "backup finished"
