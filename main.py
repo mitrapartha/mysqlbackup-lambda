@@ -12,15 +12,20 @@ def backup(event, context):
     print("Function started")
 
     dbHost = os.environ['DB_HOST']
-    dbName = os.environ['DB_NAME']
+    dNames = os.environ['DB_NAMES']
     dbUser = os.environ['DB_USER']
     dbPass = os.environ['DB_PASS']
-    print(dbHost)
-    print("%s %s ".format(dbHost, dbName))
+# Split the variable into a list of values
+    dbName = dNames.split(',')    
+    
+#    print(dbHost)
+#    print("%s %s ".format(dbHost, dbName))
 
+    for idx, value in enumerate(values):
+    # Command to execute 
     command = "mysqldump --host %s --user %s -p%s %s | gzip -c | aws s3 cp - s3://%s/%s.gz" % (
         dbHost, dbUser, dbPass, dbName, S3_BUCKET, dbName + "_" + timestamp)
-    #print (command)
+    #Execute (command)
     subprocess.Popen(command, shell=True).wait()
     print("MySQL backup finished")
     return "backup finished"
