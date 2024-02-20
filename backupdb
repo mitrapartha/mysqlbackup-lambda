@@ -1,0 +1,11 @@
+#!/bin/bash
+mkdir -p ~/s3back
+
+for i in $(echo $DB_NAMES | sed "s/,/ /g")
+do
+    # call your procedure/other scripts here below
+    echo Backing up database $i
+    mysqldump --host=$DB_HOST --user=$DB_USER --password=$DB_PASS $i | gzip > ~/s3back/$i.$(date +%d-%m-%Y).gz
+done
+
+aws s3 cp ~/s3back s3://$S3_BUCKET/backups --recursive
