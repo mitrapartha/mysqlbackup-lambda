@@ -8,7 +8,7 @@ S3_BUCKET = os.environ['S3_BUCKET']
 timestamp = time.strftime('%Y-%m-%d-%I:%M')
 
 
-def backup(event, context):
+def handler(event, context):
     print("Function started")
 
     dbHost = os.environ['DB_HOST']
@@ -21,7 +21,7 @@ def backup(event, context):
 #    print(dbHost)
     print("%s %s ".format(dbHost, dbNames))
 #    for idx, dbName in enumerate(dbName):
-        print("Backup started for " + dbNames + " database" )
+    print("Backup started for " + dbNames + " database" )
 #   Command to execute 
     command = "mysqldump -alv --no-tablespaces --skip-lock-tables --host %s --user %s -p%s %s | gzip -c | aws s3 cp - s3://%s/%s.gz" % (
             dbHost, dbUser, dbPass, dbNames, S3_BUCKET, dbName + "_" + timestamp)
