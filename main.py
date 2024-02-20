@@ -23,7 +23,7 @@ def backup(event, context):
     for idx, dbName in enumerate(dbName):
         print("Backup started for " + dbName + " database" )
         # Command to execute 
-        command = "mysqldump  -alv --host %s --user %s -p%s %s | gzip -c | aws s3 cp - s3://%s/%s.gz" % (
+        command = "mysqldump -alv --no-tablespaces --skip-lock-tables --host %s --user %s -p%s %s | gzip -c | aws s3 cp - s3://%s/%s.gz" % (
             dbHost, dbUser, dbPass, dbName, S3_BUCKET, dbName + "_" + timestamp)
     #Execute (command)
         subprocess.Popen(command, shell=True).wait()
